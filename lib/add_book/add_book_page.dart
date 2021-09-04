@@ -18,6 +18,21 @@ class AddBookPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
+                  GestureDetector(
+                    child: SizedBox(
+                      width: 100,
+                      height: 160,
+                      child: model.imageFile != null
+                          ? Image.file(model.imageFile!)
+                          : Container(
+                              color: Colors.grey,
+                            ),
+                    ),
+                    onTap: () async{
+                      print("反応");
+                      await model.pickImage();
+                    },
+                  ),
                   TextField(
                     decoration: InputDecoration(
                       hintText: '本のタイトル',

@@ -27,6 +27,9 @@ class BookListPage extends StatelessWidget {
                   (book) => Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     child: ListTile(
+                      leading: book.imgURl != null
+                          ? Image.network(book.imgURl!)
+                          : null,
                       title: Text(book.title),
                       subtitle: Text(book.author),
                     ),
@@ -62,7 +65,7 @@ class BookListPage extends StatelessWidget {
                         caption: '削除',
                         color: Colors.red,
                         icon: Icons.delete,
-                        onTap: () async{
+                        onTap: () async {
                           //削除する
                           await showConfirmDialog(context, book, model);
                         },
@@ -107,7 +110,11 @@ class BookListPage extends StatelessWidget {
     );
   }
 
-  Future showConfirmDialog(BuildContext context, Book book, BookListModel model,){
+  Future showConfirmDialog(
+    BuildContext context,
+    Book book,
+    BookListModel model,
+  ) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -122,7 +129,7 @@ class BookListPage extends StatelessWidget {
             ),
             TextButton(
               child: Text("はい"),
-              onPressed: () async{
+              onPressed: () async {
                 //modelで削除
                 await model.delete(book);
                 Navigator.pop(context);
@@ -132,8 +139,7 @@ class BookListPage extends StatelessWidget {
                   content: Text("${book.title}を編集しました"),
                 );
                 model.fetchBookList();
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(snackBar);
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
             ),
           ],
@@ -141,5 +147,4 @@ class BookListPage extends StatelessWidget {
       },
     );
   }
-
 }
